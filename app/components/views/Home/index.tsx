@@ -26,7 +26,6 @@ import { NotificationModal } from "components/NotificationModal";
 import { init } from "lib/i18n";
 
 import styles from "./index.module.css";
-import { IS_PRODUCTION } from "lib/constants";
 import { setAppState } from "state/app";
 import { ChangeLanguageButton } from "components/ChangeLanguageButton";
 import { ConnectButton } from "../../ConnectButton";
@@ -302,7 +301,7 @@ export const Home: FC = () => {
                 onHide={() => setShowMobileMenu(false)}
               />
             </div>
-            {!IS_PRODUCTION && <ChangeLanguageButton />}
+            <ChangeLanguageButton />
             <ConnectButton
               isConnected={isConnected}
               loadWeb3Modal={loadWeb3Modal}
