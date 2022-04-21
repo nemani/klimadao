@@ -9,6 +9,10 @@ export const selectStakeAllowance = createSelector(
   selectUserState,
   (user) => user.stakeAllowance
 );
+export const selectDonateAllowance = createSelector(
+  selectUserState,
+  (user) => user.donateAllowance
+);
 export const selectMigrateAllowance = createSelector(
   selectUserState,
   (user) => user.migrateAllowance

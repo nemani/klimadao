@@ -67,7 +67,7 @@ export const Stake = (props: Props) => {
 
   const stakeAllowance = useSelector(selectStakeAllowance);
   const balances = useSelector(selectBalances);
-
+  console.log("donateAllow", donateAllowance);
   const isLoading =
     !stakeAllowance || typeof stakeAllowance.klima === "undefined";
 

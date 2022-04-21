@@ -64,6 +64,12 @@ export interface UserState {
     ubo: string;
     nbo: string;
   };
+  donateAllowance?: {
+    bct: string;
+  };
+  donated?: {
+    bct: string;
+  };
 }
 
 const initialState: UserState = {
@@ -73,6 +79,8 @@ const initialState: UserState = {
   stakeAllowance: undefined,
   bondAllowance: undefined,
   carbonRetired: undefined,
+  donateAllowance: undefined,
+  donated: undefined,
 };
 
 /** Helper type to reduce boilerplate */
@@ -86,6 +94,12 @@ export const userSlice = createSlice({
   reducers: {
     setBalance: (s, a: Setter<"balance">) => {
       s.balance = { ...s.balance!, ...a.payload };
+    },
+    setDonateAllowance: (s, a: Setter<"donateAllowance">) => {
+      s.donateAllowance = {
+        ...s.donateAllowance!,
+        ...a.payload,
+      };
     },
     setPklimaTerms: (s, a: Setter<"pklimaTerms">) => {
       s.pklimaTerms = {
@@ -215,6 +229,12 @@ export const userSlice = createSlice({
       s.pklimaTerms.redeemable = safeSub(s.pklimaTerms.redeemable, a.payload);
       s.pklimaTerms.claimed = safeAdd(s.pklimaTerms.claimed, a.payload);
     },
+    donate: (s, a: PayloadAction<string>) => {
+      if (s.donateAllowance!.bct > a.payload) {
+        s.donated!.bct = safeAdd(s.donated!.bct, a.payload);
+        return;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(redeemBond, (s, a) => {
@@ -232,6 +252,7 @@ export const {
   setStakeAllowance,
   setBondAllowance,
   setWrapAllowance,
+  setDonateAllowance,
   setCarbonRetiredBalances,
   setCarbonRetiredAllowance,
   updateRetirement,
@@ -241,6 +262,7 @@ export const {
   decrementWrap,
   redeemAlpha,
   redeemPklima,
+  donate,
 } = userSlice.actions;
 
 export default userSlice.reducer;

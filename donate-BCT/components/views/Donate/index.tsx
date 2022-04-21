@@ -1,33 +1,23 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { providers } from "ethers";
-import { selectNotificationStatus, selectLocale } from "state/selectors";
+import { selectNotificationStatus } from "state/selectors";
 import { setAppState, AppNotificationStatus, TxnStatus } from "state/app";
-import InfoOutlined from "@mui/icons-material/InfoOutlined";
-import LibraryAddOutlined from "@mui/icons-material/LibraryAddOutlined";
+import SpaOutlined from "@mui/icons-material/SpaOutlined";
 
 import {
+  getApprovalAmount,
   changeApprovalTransaction,
-  changeStakeTransaction,
-} from "actions/stake";
+  changeDonationTransaction,
+} from "actions/donate";
 import { useAppDispatch } from "state";
-import { incrementStake, decrementStake, setStakeAllowance } from "state/user";
-import {
-  selectAppState,
-  selectBalances,
-  selectStakeAllowance,
-} from "state/selectors";
+import { setDonateAllowance, donate } from "state/user";
+import { selectBalances, selectDonateAllowance } from "state/selectors";
 
-import {
-  ButtonPrimary,
-  Spinner,
-  Text,
-  TextInfoTooltip,
-} from "@klimadao/lib/components";
-import { trimWithPlaceholder, concatAddress } from "@klimadao/lib/utils";
+import { ButtonPrimary, Spinner, Text } from "@klimadao/lib/components";
+import { concatAddress } from "@klimadao/lib/utils";
 import { Trans, t } from "@lingui/macro";
 import { BalancesCard } from "components/BalancesCard";
-import { RebaseCard } from "components/RebaseCard";
 import { ImageCard } from "components/ImageCard";
 
 import * as styles from "./styles";
@@ -46,10 +36,8 @@ interface Props {
 }
 
 export const Donate = (props: Props) => {
-  const locale = useSelector(selectLocale);
-
   const dispatch = useAppDispatch();
-  const [view, setView] = useState("donate");
+
   const fullStatus: AppNotificationStatus | null = useSelector(
     selectNotificationStatus
   );
@@ -62,67 +50,52 @@ export const Donate = (props: Props) => {
 
   const [quantity, setQuantity] = useState("");
 
-  const { fiveDayRate, currentIndex, stakingAnnualPercent } =
-    useSelector(selectAppState);
-
-  const stakeAllowance = useSelector(selectStakeAllowance);
+  const donateAllowance = useSelector(selectDonateAllowance);
   const balances = useSelector(selectBalances);
 
   const isLoading =
-    !stakeAllowance || typeof stakeAllowance.klima === "undefined";
+    !donateAllowance || typeof donateAllowance.bct === "undefined";
 
-  const fiveDayRatePercent = fiveDayRate && fiveDayRate * 100;
-  const stakingAKR = stakingAnnualPercent && stakingAnnualPercent * 100;
+  const getAllowance = async () => {
+    const val: string = await getApprovalAmount({ provider: props.provider });
+    dispatch(setDonateAllowance({ bct: val }));
+    return val;
+  };
 
   const setMax = () => {
     setStatus(null);
-    if (view === "stake") {
-      setQuantity(balances?.klima ?? "0");
-    } else {
-      setQuantity(balances?.sklima ?? "0");
-    }
+    setQuantity(balances?.bct ?? "0");
   };
 
-  const handleApproval = (action: "stake" | "unstake") => async () => {
+  const handleApproval = (value: number) => async () => {
     try {
-      const value = await changeApprovalTransaction({
+      const approvalValue = await changeApprovalTransaction({
         provider: props.provider,
-        action,
         onStatus: setStatus,
+        value,
       });
-      if (action === "stake") {
-        dispatch(setStakeAllowance({ klima: value }));
-      } else {
-        dispatch(setStakeAllowance({ sklima: value }));
-      }
+      dispatch(setDonateAllowance({ bct: approvalValue }));
     } catch (e) {
       return;
     }
   };
 
-  const handleStake = (action: "stake" | "unstake") => async () => {
+  const handleDonate = (value: number) => async () => {
     try {
-      const value = quantity.toString();
       setQuantity("");
-      await changeStakeTransaction({
+      await changeDonationTransaction({
         value,
         provider: props.provider,
-        action,
         onStatus: setStatus,
       });
-      dispatch(
-        action === "stake" ? incrementStake(value) : decrementStake(value)
-      );
+      dispatch(donate(value.toString()));
     } catch (e) {
       return;
     }
   };
 
-  const hasApproval = (action: "stake" | "unstake") => {
-    if (action === "stake")
-      return stakeAllowance && !!Number(stakeAllowance.klima);
-    if (action === "unstake")
-      return stakeAllowance && !!Number(stakeAllowance.sklima);
+  const hasApproval = (value: number) => {
+    return donateAllowance && Number(donateAllowance.bct) > value;
   };
 
   const getButtonProps = (): ButtonProps => {
@@ -148,38 +121,21 @@ export const Donate = (props: Props) => {
         onClick: undefined,
         disabled: true,
       };
-    } else if (view === "stake" && !hasApproval("stake")) {
+    } else if (!hasApproval(value)) {
       return {
         label: <Trans id="shared.approve">Approve</Trans>,
-        onClick: handleApproval("stake"),
+        onClick: handleApproval(value),
         disabled: false,
       };
-    } else if (view === "unstake" && !hasApproval("unstake")) {
-      return {
-        label: <Trans id="shared.approve">Approve</Trans>,
-        onClick: handleApproval("unstake"),
-        disabled: false,
-      };
-    } else if (view === "stake" && hasApproval("stake")) {
+    } else if (hasApproval(value)) {
       return {
         label: value ? (
-          <Trans id="stake.stake_klima">Stake KLIMA</Trans>
+          <Trans id="stake.stake_klima">Donate BCT</Trans>
         ) : (
           <Trans id="shared.enter_amount">Enter Amount</Trans>
         ),
-        onClick: handleStake("stake"),
-        disabled: !balances?.klima || !value || value > Number(balances.klima),
-      };
-    } else if (view === "unstake" && hasApproval("unstake")) {
-      return {
-        label: value ? (
-          <Trans id="stake.unstake_klima">Unstake KLIMA</Trans>
-        ) : (
-          <Trans id="shared.enter_amount">Enter Amount</Trans>
-        ),
-        onClick: handleStake("unstake"),
-        disabled:
-          !balances?.sklima || !value || value > Number(balances.sklima),
+        onClick: handleDonate(value),
+        disabled: !balances?.bct || !value || value > Number(balances.klima),
       };
     } else {
       return {
@@ -191,82 +147,44 @@ export const Donate = (props: Props) => {
   };
 
   const getInputPlaceholder = (): string => {
-    if (view === "stake") {
-      return t({
-        id: "stake.inputplaceholder.stake",
-        message: "Amount to stake",
-      });
-    } else if (view === "unstake") {
-      return t({
-        id: "stake.inputplaceholder.unstake",
-        message: "Amount to unstake",
-      });
-    } else {
-      return t({ id: "shared.error", message: "ERROR" });
-    }
+    return t({
+      id: "donate.inputplaceholder",
+      message: "Amount to donate",
+    });
   };
 
   const showSpinner =
     props.isConnected &&
     (status === "userConfirmation" ||
       status === "networkConfirmation" ||
+      !getAllowance() ||
       isLoading);
 
   return (
     <>
       <BalancesCard
-        assets={["klima", "sklima"]}
+        assets={["bct"]}
         tooltip={t({
-          id: "stake.balancescard.tooltip",
-          message:
-            "Stake your KLIMA tokens to receive sKLIMA. After every rebase, your sKLIMA balance will increase by the given percentage.",
+          id: "donate.balancescard.tooltip",
+          message: "Your current BCT balance",
           comment: "Long sentence",
         })}
       />
-      <RebaseCard isConnected={props.isConnected} />
 
       <div className={styles.stakeCard}>
         <div className={styles.stakeCard_header}>
           <Text t="h4" className={styles.stakeCard_header_title}>
-            <LibraryAddOutlined />
-            <Trans id="stake.stake_klima">Stake KLIMA</Trans>
+            <SpaOutlined />
+            <Trans id="donate.donate_bct">Donate BCT</Trans>
           </Text>
           <Text t="caption" color="lightest">
-            <Trans id="stake.hold_stake_and_compound" comment="Long sentence">
-              Hold, stake, and compound. If the protocol accumulates excess
-              reserves issuing carbon bonds, these rewards are shared among all
-              holders of staked KLIMA (sKLIMA).
+            <Trans id="donate.donate_bct_for_earth_day" comment="Long sentence">
+              Donate BCT for Earth Day
             </Trans>
           </Text>
         </div>
         <div className={styles.stakeCard_ui}>
           <div className={styles.inputsContainer}>
-            <div className={styles.stakeSwitch}>
-              <button
-                className={styles.switchButton}
-                type="button"
-                onClick={() => {
-                  setQuantity("");
-                  setStatus(null);
-                  setView("stake");
-                }}
-                data-active={view === "stake"}
-              >
-                <Trans id="stake.stake">Stake</Trans>
-              </button>
-              <button
-                className={styles.switchButton}
-                type="button"
-                onClick={() => {
-                  setQuantity("");
-                  setStatus(null);
-                  setView("unstake");
-                }}
-                data-active={view === "unstake"}
-              >
-                <Trans id="stake.unstake">Unstake</Trans>
-              </button>
-            </div>
             <div className={styles.stakeInput}>
               <input
                 className={styles.stakeInput_input}
@@ -293,73 +211,6 @@ export const Donate = (props: Props) => {
               </div>
             )}
             <div className="hr" />
-          </div>
-
-          <div className={styles.infoTable}>
-            <div className={styles.infoTable_label}>
-              <Trans id="stake.5_day_rewards">5 Day Rewards</Trans>
-              <TextInfoTooltip
-                content={
-                  <Trans
-                    id="stake.5_day_rewards.tooltip"
-                    comment="Long sentence"
-                  >
-                    Approximate rewards, including compounding, should you
-                    remain staked for 5 days.
-                  </Trans>
-                }
-              >
-                <InfoOutlined />
-              </TextInfoTooltip>
-            </div>
-            <div className={styles.infoTable_label}>
-              <Trans id="stake.akr">AKR</Trans>
-              <TextInfoTooltip
-                content={
-                  <Trans id="stake.akr.tooltip" comment="Long sentence">
-                    Annualized KLIMA Rewards, including compounding, should the
-                    current reward rate remain unchanged for 12 months (reward
-                    rate may be subject to change).
-                  </Trans>
-                }
-              >
-                <InfoOutlined />
-              </TextInfoTooltip>
-            </div>
-            <div className={styles.infoTable_label}>
-              <Trans id="stake.index">Index</Trans>
-              <TextInfoTooltip
-                content={
-                  <Trans id="stake.index.tooltip" comment="Long sentence">
-                    Amount of KLIMA you would have today if you staked 1 KLIMA
-                    on launch day. Useful for accounting purposes.
-                  </Trans>
-                }
-              >
-                <InfoOutlined />
-              </TextInfoTooltip>
-            </div>
-            <div className={styles.infoTable_value}>
-              {fiveDayRatePercent ? (
-                trimWithPlaceholder(fiveDayRatePercent, 2, locale) + "%"
-              ) : (
-                <Trans id="shared.loading">Loading...</Trans>
-              )}
-            </div>
-            <div className={styles.infoTable_value}>
-              {stakingAKR ? (
-                trimWithPlaceholder(stakingAKR, 0, locale) + "%"
-              ) : (
-                <Trans id="shared.loading">Loading...</Trans>
-              )}
-            </div>
-            <div className={styles.infoTable_value}>
-              {currentIndex ? (
-                trimWithPlaceholder(currentIndex, 2, locale) + " sKLIMA"
-              ) : (
-                <Trans id="shared.loading">Loading...</Trans>
-              )}
-            </div>
           </div>
 
           <div className={styles.buttonRow}>
