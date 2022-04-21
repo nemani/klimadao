@@ -1,5 +1,5 @@
 {
-  "name": "@klimadao/app",
+  "name": "@klimadao/donate-BCT",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",

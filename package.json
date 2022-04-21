@@ -4,7 +4,9 @@
   "workspaces": [
     "./site",
     "./app",
-    "./lib"
+    "./lib",
+    "./cms",
+    "./donate-BCT"
   ],
   "engines": {
     "npm": ">=8.0.0",
@@ -20,8 +22,9 @@
     "dev-lib": "npm run dev --workspace=lib",
     "dev-site": "npm run build-lib && npm run dev --workspace=site",
     "dev-app": "npm run build-lib && npm run dev --workspace=app",
-    "dev-cms": "cd ./cms && npm run start",
-    "deploy-cms": "cd ./cms && npm run deploy",
+    "dev-donate": "npm run build-lib && npm run dev --workspace=donate-BCT",
+    "dev-cms": "npm run start --workspace=cms",
+    "deploy-cms": "npm run deploy --workspace=cms",
     "format-all": "prettier --write ./",
     "extract-strings": "npm run -w site lingui:extract && npm run -w app lingui:extract",
     "compile-strings": "npm run extract-strings && npm run -w site lingui:compile && npm run -w app lingui:compile"
