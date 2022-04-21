@@ -5,19 +5,14 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletLink from "walletlink";
 import Web3Modal from "web3modal";
 import { useAppDispatch } from "state";
-import { bonds, urls } from "@klimadao/lib/constants";
+import { urls } from "@klimadao/lib/constants";
 import { useSelector } from "react-redux";
 import { selectAppState } from "state/selectors";
 import { loadAppDetails } from "actions/app";
-import { calcBondDetails } from "actions/bonds";
 import { loadAccountDetails } from "actions/user";
-import { Stake } from "components/views/Stake";
-import { PKlima } from "components/views/PKlima";
+import { Donate } from "components/views/Donate";
 import { Info } from "components/views/Info";
-import { ChooseBond } from "components/views/ChooseBond";
-import { Bond } from "components/views/Bond";
-import { Wrap } from "components/views/Wrap";
-import { Offset } from "components/views/Offset";
+
 import { InvalidNetworkModal } from "components/InvalidNetworkModal";
 import { InvalidRPCModal } from "components/InvalidRPCModal";
 import { CheckURLBanner, skipCheckURLBanner } from "components/CheckURLBanner";
@@ -33,7 +28,6 @@ import { ConnectButton } from "../../ConnectButton";
 import { NavMenu } from "components/NavMenu";
 import Menu from "@mui/icons-material/Menu";
 import { IsomorphicRoutes } from "components/IsomorphicRoutes";
-import { Buy } from "../Buy";
 
 type EIP1139Provider = ethers.providers.ExternalProvider & {
   on: (e: "accountsChanged" | "chainChanged", cb: () => void) => void;
@@ -164,7 +158,7 @@ export const Home: FC = () => {
 
   useEffect(() => {
     if (pathname === "/") {
-      navigate("/stake");
+      navigate("/donate");
     }
   }, [pathname]);
 
@@ -201,14 +195,6 @@ export const Home: FC = () => {
         onRPCError: handleRPCError,
       })
     );
-    bonds.forEach((bond) => {
-      dispatch(
-        calcBondDetails({
-          bond,
-          provider,
-        })
-      );
-    });
   };
 
   useEffect(() => {
@@ -311,58 +297,13 @@ export const Home: FC = () => {
           </div>
           <IsomorphicRoutes>
             <Route
-              path="/buy"
+              path="/donate"
               element={
-                <Buy
+                <Donate
                   address={address}
                   provider={provider}
                   isConnected={isConnected}
                   loadWeb3Modal={loadWeb3Modal}
-                />
-              }
-            />
-            <Route
-              path="/stake"
-              element={
-                <Stake
-                  address={address}
-                  provider={provider}
-                  isConnected={isConnected}
-                  loadWeb3Modal={loadWeb3Modal}
-                />
-              }
-            />
-            <Route
-              path="/pklima"
-              element={
-                <PKlima
-                  address={address}
-                  provider={provider}
-                  isConnected={isConnected}
-                  loadWeb3Modal={loadWeb3Modal}
-                />
-              }
-            />
-            <Route
-              path="/wrap"
-              element={
-                <Wrap
-                  address={address}
-                  provider={provider}
-                  isConnected={isConnected}
-                  loadWeb3Modal={loadWeb3Modal}
-                />
-              }
-            />
-            <Route
-              path="/offset"
-              element={
-                <Offset
-                  address={address}
-                  provider={provider}
-                  isConnected={isConnected}
-                  loadWeb3Modal={loadWeb3Modal}
-                  onRPCError={handleRPCError}
                 />
               }
             />
@@ -370,24 +311,6 @@ export const Home: FC = () => {
               path="/info"
               element={<Info provider={provider as providers.Web3Provider} />}
             />
-            <Route path="/bonds" element={<ChooseBond />} />
-            {bonds.map((bond) => {
-              return (
-                <Route
-                  key={bond}
-                  path={`/bonds/${bond}`}
-                  element={
-                    <Bond
-                      loadWeb3Modal={loadWeb3Modal}
-                      provider={provider}
-                      address={address}
-                      bond={bond}
-                      isConnected={isConnected}
-                    />
-                  }
-                />
-              );
-            })}
           </IsomorphicRoutes>
         </div>
       </div>

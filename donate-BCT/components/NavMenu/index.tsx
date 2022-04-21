@@ -22,11 +22,6 @@ import {
 import { urls } from "@klimadao/lib/constants";
 import { concatAddress } from "@klimadao/lib/utils";
 import MenuBookOutlined from "@mui/icons-material/MenuBookOutlined";
-import FlipOutlined from "@mui/icons-material/FlipOutlined";
-import InfoOutlined from "@mui/icons-material/InfoOutlined";
-import LibraryAddOutlined from "@mui/icons-material/LibraryAddOutlined";
-import ParkOutlined from "@mui/icons-material/ParkOutlined";
-import Payment from "@mui/icons-material/Payment";
 import SpaOutlined from "@mui/icons-material/SpaOutlined";
 
 import * as styles from "./styles";
@@ -92,7 +87,6 @@ interface Props {
 }
 
 export const NavMenu: FC<Props> = (props) => {
-  const balances = useSelector(selectBalances);
   const { pathname } = useLocation();
 
   const handleHide = () => {
@@ -120,68 +114,16 @@ export const NavMenu: FC<Props> = (props) => {
         </div>
         <div className="hr" />
       </div>
+
       <MenuButton
-        isActive={pathname === "/buy"}
-        href={"/buy"}
-        icon={<Payment />}
-        onClick={handleHide}
-      >
-        <Trans id="menu.buy_klima">Buy KLIMA</Trans>
-      </MenuButton>
-      <MenuButton
-        isActive={pathname === "/stake"}
-        href="/stake"
-        icon={<LibraryAddOutlined />}
-        onClick={handleHide}
-      >
-        <Trans id="menu.stake_klima">Stake KLIMA</Trans>
-      </MenuButton>
-      <MenuButton
-        isActive={pathname.includes("/bond")}
-        href="/bonds"
+        isActive={pathname === "/donate"}
+        href="/donate"
         icon={<SpaOutlined />}
         onClick={handleHide}
       >
-        <Trans id="menu.bond_carbon">Bond Carbon</Trans>
+        <Trans id="menu.donate_bct">Donate BCT</Trans>
       </MenuButton>
-      <MenuButton
-        isActive={pathname === "/wrap"}
-        href="/wrap"
-        icon={<FlipOutlined />}
-        onClick={handleHide}
-      >
-        <Trans id="menu.wrap_klima">Wrap sKLIMA</Trans>
-      </MenuButton>
-      <MenuButton
-        isActive={pathname === "/offset"}
-        icon={<ParkOutlined />}
-        href="/offset"
-        onClick={handleHide}
-      >
-        <Trans id="menu.offset">Offset</Trans>
-      </MenuButton>
-      <MenuButton
-        isActive={pathname === "/info"}
-        href="/info"
-        icon={<InfoOutlined />}
-        onClick={handleHide}
-      >
-        <Trans id="menu.info">Info</Trans>
-      </MenuButton>
-      {!!Number(balances?.pklima) && (
-        <div className="labelStack">
-          <Text t="badge" color="lightest">
-            ⭐ <Trans id="menu.just_for_you">JUST FOR YOU</Trans>
-          </Text>
-          <MenuButton
-            isActive={pathname === "/pklima"}
-            icon={<FlipOutlined />}
-            href="/pklima"
-          >
-            <Trans id="token.pKLIMA">pKLIMA</Trans>
-          </MenuButton>
-        </div>
-      )}
+
       <div className="navFooter">
         <div className="hr" />
         <div className="navFooter_buttons">

@@ -11,7 +11,6 @@ import { AppNotificationStatus } from "../../state/app";
 import { setAppState } from "state/app";
 import { useAppDispatch } from "state";
 import { getStatusMessage } from "actions/utils";
-import { ClaimExceededModal } from "components/views/PKlima/ClaimExceededModal";
 import { Text } from "@klimadao/lib/components";
 import { Trans } from "@lingui/macro";
 

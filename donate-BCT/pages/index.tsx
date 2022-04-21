@@ -14,14 +14,15 @@ export async function getStaticProps() {
     props: {},
   };
 }
+
 const HomePage: NextPage = () => {
   return (
     <>
       <PageHead
         production={IS_PRODUCTION}
-        title="KlimaDAO | Official App"
-        mediaTitle="KlimaDAO | Official App"
-        metaDescription="Use the KLIMA web app to bond, stake and earn rewards."
+        title="KlimaDAO | Earth Day Donation"
+        mediaTitle="KlimaDAO | Earth Day Donation"
+        metaDescription="Earth Day Donation for KlimaDAO."
         mediaImageSrc="/og-media.png"
       />
       <WithRedux>
