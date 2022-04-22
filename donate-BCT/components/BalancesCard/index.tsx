@@ -4,7 +4,6 @@ import { trimWithPlaceholder } from "@klimadao/lib/utils";
 import { InfoButton } from "components/InfoButton";
 import * as styles from "./styles";
 import { FC } from "react";
-import { Trans } from "@lingui/macro";
 
 interface Props {
   asset: string;
