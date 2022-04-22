@@ -207,7 +207,8 @@ export const Donate = (props: Props) => {
         label="Donation Goal"
         tooltip={t({
           id: "donate.balancescard.goal",
-          message: "Total Goal for BCT Donated for Earth Day by community",
+          message:
+            "Total Goal for BCT Donated for Earth Day by the Klimate community",
           comment: "Long sentence",
         })}
       />
@@ -220,7 +221,8 @@ export const Donate = (props: Props) => {
           </Text>
           <Text t="caption" color="lightest">
             <Trans id="donate.donate_bct_for_earth_day" comment="Long sentence">
-              Donate BCT for Earth Day
+              This unofficial donation drive for Earth Day is by the community,
+              for the community.
             </Trans>
           </Text>
         </div>
