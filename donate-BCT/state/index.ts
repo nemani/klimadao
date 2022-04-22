@@ -2,13 +2,11 @@ import { configureStore, ThunkAction, AnyAction } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 
 import userReducer from "./user";
-import bondsReducer from "./bonds";
 import appReducer from "./app";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    bonds: bondsReducer,
     app: appReducer,
   },
 });

@@ -10,14 +10,35 @@ export const getApprovalAmount = async (params: {
   provider: providers.JsonRpcProvider;
 }): Promise<string> => {
   try {
-    const singer = params.provider.getSigner();
+    const signer = params.provider.getSigner();
     const contract = new ethers.Contract(
       addresses["mainnet"].bct,
       IERC20.abi,
-      singer
+      signer
     );
     const address = addresses["mainnet"].donation_contract;
-    const value = await contract.allowance(singer.getAddress(), address);
+    const value = await contract.allowance(signer.getAddress(), address);
+    return formatUnits(value, 18);
+  } catch (error: any) {
+    if (error.code === 4001) {
+      throw error;
+    }
+    throw error;
+  }
+};
+
+export const getDonatedAmount = async (params: {
+  provider: providers.JsonRpcProvider;
+}): Promise<string> => {
+  try {
+    const signer = params.provider.getSigner();
+    const contract = new ethers.Contract(
+      addresses["mainnet"].donation_contract,
+      DonationContract.abi,
+      signer
+    );
+
+    const value = await contract.getBCTBalance();
     return formatUnits(value, 18);
   } catch (error: any) {
     if (error.code === 4001) {

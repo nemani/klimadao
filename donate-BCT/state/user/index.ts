@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { redeemBond } from "state/bonds";
 import { safeAdd, safeSub, trimStringDecimals } from "@klimadao/lib/utils";
 import { Bond, InputToken, RetirementToken } from "@klimadao/lib/constants";
 
@@ -235,12 +234,6 @@ export const userSlice = createSlice({
         return;
       }
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(redeemBond, (s, a) => {
-      if (!s.balance) return;
-      s.balance.klima = safeAdd(s.balance.klima, a.payload.value);
-    });
   },
 });
 

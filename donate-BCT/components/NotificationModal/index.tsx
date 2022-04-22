@@ -61,7 +61,6 @@ export const NotificationModal: FC = () => {
 
   if (!status) return null;
   const { statusType } = status;
-  if (status && statusType === "claimExceeded") return <ClaimExceededModal />;
 
   const getAsset = (
     section: string,

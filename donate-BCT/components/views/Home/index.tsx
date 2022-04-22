@@ -1,4 +1,4 @@
-import { ethers, providers } from "ethers";
+import { ethers } from "ethers";
 import { FC, useRef, useState, useEffect } from "react";
 import { useNavigate, Route, useLocation } from "react-router-dom";
 import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -11,7 +11,6 @@ import { selectAppState } from "state/selectors";
 import { loadAppDetails } from "actions/app";
 import { loadAccountDetails } from "actions/user";
 import { Donate } from "components/views/Donate";
-import { Info } from "components/views/Info";
 
 import { InvalidNetworkModal } from "components/InvalidNetworkModal";
 import { InvalidRPCModal } from "components/InvalidRPCModal";
@@ -308,8 +307,15 @@ export const Home: FC = () => {
               }
             />
             <Route
-              path="/info"
-              element={<Info provider={provider as providers.Web3Provider} />}
+              path="/donate"
+              element={
+                <Donate
+                  address={address}
+                  provider={provider}
+                  isConnected={isConnected}
+                  loadWeb3Modal={loadWeb3Modal}
+                />
+              }
             />
           </IsomorphicRoutes>
         </div>

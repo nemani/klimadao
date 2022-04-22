@@ -9,6 +9,7 @@ import {
   getApprovalAmount,
   changeApprovalTransaction,
   changeDonationTransaction,
+  getDonatedAmount,
 } from "actions/donate";
 import { useAppDispatch } from "state";
 import { setDonateAllowance, donate } from "state/user";
@@ -18,7 +19,6 @@ import { ButtonPrimary, Spinner, Text } from "@klimadao/lib/components";
 import { concatAddress } from "@klimadao/lib/utils";
 import { Trans, t } from "@lingui/macro";
 import { BalancesCard } from "components/BalancesCard";
-import { ImageCard } from "components/ImageCard";
 
 import * as styles from "./styles";
 
@@ -49,6 +49,7 @@ export const Donate = (props: Props) => {
   };
 
   const [quantity, setQuantity] = useState("");
+  const [donated, setDonated] = useState("");
 
   const donateAllowance = useSelector(selectDonateAllowance);
   const balances = useSelector(selectBalances);
@@ -95,7 +96,7 @@ export const Donate = (props: Props) => {
   };
 
   const hasApproval = (value: number) => {
-    return donateAllowance && Number(donateAllowance.bct) > value;
+    return donateAllowance && Number(donateAllowance.bct) >= value;
   };
 
   const getButtonProps = (): ButtonProps => {
@@ -130,7 +131,7 @@ export const Donate = (props: Props) => {
     } else if (hasApproval(value)) {
       return {
         label: value ? (
-          <Trans id="stake.stake_klima">Donate BCT</Trans>
+          <Trans id="donate.donate_bct">Donate BCT</Trans>
         ) : (
           <Trans id="shared.enter_amount">Enter Amount</Trans>
         ),
@@ -160,13 +161,46 @@ export const Donate = (props: Props) => {
       !getAllowance() ||
       isLoading);
 
+  const donatedAmount = async () => {
+    if (props.isConnected) {
+      const amt = await getDonatedAmount({ provider: props.provider });
+      setDonated(amt);
+    }
+  };
+
+  donatedAmount();
+
   return (
     <>
       <BalancesCard
-        assets={["bct"]}
+        asset="bct"
+        balance={donated ?? 0}
+        label="Donated BCT till now"
+        tooltip={t({
+          id: "donate.balancescard.total",
+          message: "Total BCT Donated for Earth Day",
+          comment: "Long sentence",
+        })}
+      />
+
+      <BalancesCard
+        asset="bct"
+        balance={balances?.bct ?? "0"}
+        label="BCT balance"
         tooltip={t({
           id: "donate.balancescard.tooltip",
           message: "Your current BCT balance",
+          comment: "Long sentence",
+        })}
+      />
+
+      <BalancesCard
+        asset="bct"
+        balance={donateAllowance?.bct ?? "0"}
+        label="BCT approved for Donation"
+        tooltip={t({
+          id: "donate.balancescard.approved",
+          message: "BCT approved for Donation",
           comment: "Long sentence",
         })}
       />
@@ -227,8 +261,6 @@ export const Donate = (props: Props) => {
           </div>
         </div>
       </div>
-
-      <ImageCard />
     </>
   );
 };

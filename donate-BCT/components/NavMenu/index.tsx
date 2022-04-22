@@ -1,6 +1,4 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectBalances } from "state/selectors";
 import { Trans } from "@lingui/macro";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
