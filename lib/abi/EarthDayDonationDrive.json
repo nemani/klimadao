@@ -1,5 +1,5 @@
 {
-  "contractName": "OneUpCuban",
+  "contractName": "EarthDayDonationDrive",
   "abi": [
     { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
     {
@@ -30,13 +30,6 @@
     },
     {
       "inputs": [],
-      "name": "CubanCount",
-      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
       "name": "KlimaRetirementAggregator",
       "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
       "stateMutability": "view",
@@ -50,25 +43,10 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "newMinDeposit",
-          "type": "uint256"
-        }
-      ],
-      "name": "changeMinDeposit",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        { "internalType": "uint256", "name": "newTarget", "type": "uint256" }
-      ],
-      "name": "changeTargetAmount",
-      "outputs": [],
-      "stateMutability": "nonpayable",
+      "inputs": [],
+      "name": "beneficiary",
+      "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -86,6 +64,13 @@
       "outputs": [
         { "internalType": "uint256", "name": "bal", "type": "uint256" }
       ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "message",
+      "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
       "stateMutability": "view",
       "type": "function"
     },
@@ -118,6 +103,46 @@
       "type": "function"
     },
     {
+      "inputs": [
+        { "internalType": "string", "name": "newbeneficiary", "type": "string" }
+      ],
+      "name": "setBeneficiary",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "string", "name": "newmessage", "type": "string" }
+      ],
+      "name": "setMessage",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "newMinDeposit",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMinDeposit",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "uint256", "name": "newTarget", "type": "uint256" }
+      ],
+      "name": "setTargetAmount",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "targetAmount",
       "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -138,13 +163,6 @@
       "name": "updateBCTBalance",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-      "name": "winners",
-      "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-      "stateMutability": "view",
       "type": "function"
     }
   ]

@@ -3,7 +3,7 @@ import { OnStatusHandler } from "./utils";
 import { addresses } from "@klimadao/lib/constants";
 
 import IERC20 from "@klimadao/lib/abi/IERC20.json";
-import DonationContract from "@klimadao/lib/abi/OneUpCuban.json";
+import DonationContract from "@klimadao/lib/abi/EarthDayDonationDrive.json";
 import { formatUnits } from "@klimadao/lib/utils";
 
 export const getApprovalAmount = async (params: {
@@ -27,9 +27,9 @@ export const getApprovalAmount = async (params: {
   }
 };
 
-export const getDonatedAmount = async (params: {
+export const getStats = async (params: {
   provider: providers.JsonRpcProvider;
-}): Promise<string> => {
+}): Promise<{ balance: string; totalDonated: string; donateGoal: string }> => {
   try {
     const signer = params.provider.getSigner();
     const contract = new ethers.Contract(
@@ -37,9 +37,21 @@ export const getDonatedAmount = async (params: {
       DonationContract.abi,
       signer
     );
+    const BCT_contract = new ethers.Contract(
+      addresses["mainnet"].bct,
+      IERC20.abi,
+      params.provider.getSigner()
+    );
 
-    const value = await contract.getBCTBalance();
-    return formatUnits(value, 18);
+    const balance = await BCT_contract.balanceOf(signer.getAddress());
+    const totalDonated = await contract.balance();
+    const donateGoal = await contract.targetAmount();
+
+    return {
+      balance: formatUnits(balance, 18),
+      totalDonated: formatUnits(totalDonated, 18),
+      donateGoal: formatUnits(donateGoal, 18),
+    };
   } catch (error: any) {
     if (error.code === 4001) {
       throw error;

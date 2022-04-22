@@ -9,11 +9,11 @@ import {
   getApprovalAmount,
   changeApprovalTransaction,
   changeDonationTransaction,
-  getDonatedAmount,
+  getStats,
 } from "actions/donate";
 import { useAppDispatch } from "state";
 import { setDonateAllowance, donate } from "state/user";
-import { selectBalances, selectDonateAllowance } from "state/selectors";
+import { selectDonateAllowance } from "state/selectors";
 
 import { ButtonPrimary, Spinner, Text } from "@klimadao/lib/components";
 import { concatAddress } from "@klimadao/lib/utils";
@@ -49,10 +49,12 @@ export const Donate = (props: Props) => {
   };
 
   const [quantity, setQuantity] = useState("");
-  const [donated, setDonated] = useState("");
+
+  const [balance, setBalance] = useState("");
+  const [totalDonated, setTotalDonated] = useState("");
+  const [donateGoal, setDonateGoal] = useState("");
 
   const donateAllowance = useSelector(selectDonateAllowance);
-  const balances = useSelector(selectBalances);
 
   const isLoading =
     !donateAllowance || typeof donateAllowance.bct === "undefined";
@@ -65,7 +67,7 @@ export const Donate = (props: Props) => {
 
   const setMax = () => {
     setStatus(null);
-    setQuantity(balances?.bct ?? "0");
+    setQuantity(balance ?? "0");
   };
 
   const handleApproval = (value: number) => async () => {
@@ -124,7 +126,7 @@ export const Donate = (props: Props) => {
       };
     } else if (!hasApproval(value)) {
       return {
-        label: <Trans id="shared.approve">Approve</Trans>,
+        label: <Trans id="shared.approve">Approve {value} BCT</Trans>,
         onClick: handleApproval(value),
         disabled: false,
       };
@@ -136,7 +138,7 @@ export const Donate = (props: Props) => {
           <Trans id="shared.enter_amount">Enter Amount</Trans>
         ),
         onClick: handleDonate(value),
-        disabled: !balances?.bct || !value || value > Number(balances.klima),
+        disabled: !balance || !value || value > Number(balance),
       };
     } else {
       return {
@@ -161,46 +163,50 @@ export const Donate = (props: Props) => {
       !getAllowance() ||
       isLoading);
 
-  const donatedAmount = async () => {
+  const getDonationStats = async () => {
     if (props.isConnected) {
-      const amt = await getDonatedAmount({ provider: props.provider });
-      setDonated(amt);
+      const { balance, totalDonated, donateGoal } = await getStats({
+        provider: props.provider,
+      });
+      setBalance(balance);
+      setTotalDonated(totalDonated);
+      setDonateGoal(donateGoal);
     }
   };
 
-  donatedAmount();
+  getDonationStats();
 
   return (
     <>
       <BalancesCard
         asset="bct"
-        balance={donated ?? 0}
-        label="Donated BCT till now"
-        tooltip={t({
-          id: "donate.balancescard.total",
-          message: "Total BCT Donated for Earth Day",
-          comment: "Long sentence",
-        })}
-      />
-
-      <BalancesCard
-        asset="bct"
-        balance={balances?.bct ?? "0"}
-        label="BCT balance"
+        balance={balance ?? "0"}
+        label="Your BCT Balance"
         tooltip={t({
           id: "donate.balancescard.tooltip",
-          message: "Your current BCT balance",
+          message: "Total BCT in your wallet",
           comment: "Long sentence",
         })}
       />
 
       <BalancesCard
         asset="bct"
-        balance={donateAllowance?.bct ?? "0"}
-        label="BCT approved for Donation"
+        balance={totalDonated ?? "0"}
+        label="Community Donation"
         tooltip={t({
-          id: "donate.balancescard.approved",
-          message: "BCT approved for Donation",
+          id: "donate.balancescard.total",
+          message: "Total BCT Donated for Earth Day by community",
+          comment: "Long sentence",
+        })}
+      />
+
+      <BalancesCard
+        asset="bct"
+        balance={donateGoal ?? "0"}
+        label="Donation Goal"
+        tooltip={t({
+          id: "donate.balancescard.goal",
+          message: "Total Goal for BCT Donated for Earth Day by community",
           comment: "Long sentence",
         })}
       />

@@ -133,7 +133,7 @@ msgstr "You've Retired"
 
 #: components/views/Donate/index.tsx:127
 msgid "shared.approve"
-msgstr "Approve"
+msgstr "Approve {value} BCT"
 
 #: components/ChangeLanguageButton/index.tsx:73
 msgid "shared.change_language"
