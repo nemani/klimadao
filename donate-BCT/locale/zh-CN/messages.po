@@ -47,31 +47,31 @@ msgid "checkurlbanner.verify_url_and_bookmark_this_page"
 msgstr ""
 
 #. Long sentence
-#: components/views/Donate/index.tsx:207
+#: components/views/Donate/index.tsx:208
 msgid "donate.balancescard.goal"
 msgstr ""
 
 #. Long sentence
-#: components/views/Donate/index.tsx:185
+#: components/views/Donate/index.tsx:186
 msgid "donate.balancescard.tooltip"
 msgstr ""
 
 #. Long sentence
-#: components/views/Donate/index.tsx:196
+#: components/views/Donate/index.tsx:197
 msgid "donate.balancescard.total"
 msgstr ""
 
-#: components/views/Donate/index.tsx:136
-#: components/views/Donate/index.tsx:218
+#: components/views/Donate/index.tsx:137
+#: components/views/Donate/index.tsx:219
 msgid "donate.donate_bct"
 msgstr ""
 
 #. Long sentence
-#: components/views/Donate/index.tsx:221
+#: components/views/Donate/index.tsx:222
 msgid "donate.donate_bct_for_earth_day"
 msgstr ""
 
-#: components/views/Donate/index.tsx:153
+#: components/views/Donate/index.tsx:154
 msgid "donate.inputplaceholder"
 msgstr ""
 
@@ -131,7 +131,7 @@ msgstr ""
 msgid "offset.you_have_retired"
 msgstr ""
 
-#: components/views/Donate/index.tsx:129
+#: components/views/Donate/index.tsx:130
 msgid "shared.approve"
 msgstr ""
 
@@ -139,31 +139,31 @@ msgstr ""
 msgid "shared.change_language"
 msgstr ""
 
-#: components/views/Donate/index.tsx:123
+#: components/views/Donate/index.tsx:124
 msgid "shared.confirming"
 msgstr ""
 
-#: components/views/Donate/index.tsx:108
+#: components/views/Donate/index.tsx:109
 msgid "shared.connect_wallet"
 msgstr ""
 
-#: components/views/Donate/index.tsx:138
+#: components/views/Donate/index.tsx:139
 msgid "shared.enter_amount"
 msgstr ""
 
-#: components/views/Donate/index.tsx:145
+#: components/views/Donate/index.tsx:146
 msgid "shared.error"
 msgstr ""
 
 #: components/CarbonTonnesBreakdownCard/index.tsx:49
 #: components/RebaseCard/index.tsx:57
 #: components/RebaseCard/index.tsx:68
-#: components/views/Donate/index.tsx:114
+#: components/views/Donate/index.tsx:115
 #: components/views/Loading/index.tsx:11
 msgid "shared.loading"
 msgstr ""
 
-#: components/views/Donate/index.tsx:245
+#: components/views/Donate/index.tsx:246
 msgid "shared.max"
 msgstr ""
 
