@@ -92,6 +92,7 @@ export const Donate = (props: Props) => {
         onStatus: setStatus,
       });
       dispatch(donate(value.toString()));
+      getDonationStats();
     } catch (e) {
       return;
     }
