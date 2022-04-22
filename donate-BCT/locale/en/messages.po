@@ -813,3 +813,4 @@ msgstr "Donate BCT"
 
 msgid "donate.donate_bct_for_earth_day"
 msgstr "Donate BCT for Earth Day"
+
