@@ -47,31 +47,31 @@ msgid "checkurlbanner.verify_url_and_bookmark_this_page"
 msgstr "⚠️ Vérifiez l'URL et mettez cette page en signet !"
 
 #. Long sentence
-#: components/views/Donate/index.tsx:201
-msgid "donate.balancescard.approved"
+#: components/views/Donate/index.tsx:207
+msgid "donate.balancescard.goal"
 msgstr ""
 
 #. Long sentence
-#: components/views/Donate/index.tsx:190
+#: components/views/Donate/index.tsx:185
 msgid "donate.balancescard.tooltip"
 msgstr ""
 
 #. Long sentence
-#: components/views/Donate/index.tsx:179
+#: components/views/Donate/index.tsx:196
 msgid "donate.balancescard.total"
 msgstr ""
 
-#: components/views/Donate/index.tsx:134
-#: components/views/Donate/index.tsx:212
+#: components/views/Donate/index.tsx:136
+#: components/views/Donate/index.tsx:218
 msgid "donate.donate_bct"
 msgstr ""
 
 #. Long sentence
-#: components/views/Donate/index.tsx:215
+#: components/views/Donate/index.tsx:221
 msgid "donate.donate_bct_for_earth_day"
 msgstr ""
 
-#: components/views/Donate/index.tsx:151
+#: components/views/Donate/index.tsx:153
 msgid "donate.inputplaceholder"
 msgstr ""
 
@@ -131,7 +131,7 @@ msgstr "Tonnes de carbone"
 msgid "offset.you_have_retired"
 msgstr "Vous avez retiré"
 
-#: components/views/Donate/index.tsx:127
+#: components/views/Donate/index.tsx:129
 msgid "shared.approve"
 msgstr "Approuver"
 
@@ -139,31 +139,31 @@ msgstr "Approuver"
 msgid "shared.change_language"
 msgstr "Changer de langue"
 
-#: components/views/Donate/index.tsx:121
+#: components/views/Donate/index.tsx:123
 msgid "shared.confirming"
 msgstr "Confirmation en cours"
 
-#: components/views/Donate/index.tsx:106
+#: components/views/Donate/index.tsx:108
 msgid "shared.connect_wallet"
 msgstr "Connectez votre portefeuille"
 
-#: components/views/Donate/index.tsx:136
+#: components/views/Donate/index.tsx:138
 msgid "shared.enter_amount"
 msgstr "Entrez le montant"
 
-#: components/views/Donate/index.tsx:143
+#: components/views/Donate/index.tsx:145
 msgid "shared.error"
 msgstr "ERREUR"
 
 #: components/CarbonTonnesBreakdownCard/index.tsx:49
 #: components/RebaseCard/index.tsx:57
 #: components/RebaseCard/index.tsx:68
-#: components/views/Donate/index.tsx:112
+#: components/views/Donate/index.tsx:114
 #: components/views/Loading/index.tsx:11
 msgid "shared.loading"
 msgstr "Chargement..."
 
-#: components/views/Donate/index.tsx:239
+#: components/views/Donate/index.tsx:245
 msgid "shared.max"
 msgstr "Max"
 

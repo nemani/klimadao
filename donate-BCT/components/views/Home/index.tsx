@@ -14,7 +14,6 @@ import { Donate } from "components/views/Donate";
 
 import { InvalidNetworkModal } from "components/InvalidNetworkModal";
 import { InvalidRPCModal } from "components/InvalidRPCModal";
-import { CheckURLBanner, skipCheckURLBanner } from "components/CheckURLBanner";
 import { NotificationModal } from "components/NotificationModal";
 
 import { init } from "lib/i18n";
@@ -141,9 +140,6 @@ export const Home: FC = () => {
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const [showCheckURLBanner, setShowCheckURLBanner] = useState(
-    !skipCheckURLBanner()
-  );
   const [provider, address, web3Modal, loadWeb3Modal] = useProvider();
   const { locale } = useSelector(selectAppState);
 
@@ -326,9 +322,6 @@ export const Home: FC = () => {
 
       {showRPCModal && (
         <InvalidRPCModal onHide={() => setShowRPCModal(false)} />
-      )}
-      {showCheckURLBanner && (
-        <CheckURLBanner onHide={() => setShowCheckURLBanner(false)} />
       )}
     </>
   );
