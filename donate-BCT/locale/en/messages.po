@@ -804,3 +804,12 @@ msgstr "wsKLIMA to unwrap"
 #: components/views/Wrap/index.tsx:273
 msgid "wrap.you_will_get"
 msgstr "You Will Get"
+
+msgid "menu.donate_bct"
+msgstr "Donate BCT"
+
+msgid "donate.donate_bct"
+msgstr "Donate BCT"
+
+msgid "donate.donate_bct_for_earth_day"
+msgstr "Donate BCT for Earth Day"
