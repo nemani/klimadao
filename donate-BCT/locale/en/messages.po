@@ -49,7 +49,7 @@ msgstr "⚠️ Verify the URL and bookmark this page!"
 #. Long sentence
 #: components/views/Donate/index.tsx:208
 msgid "donate.balancescard.goal"
-msgstr "Total Goal for BCT Donated for Earth Day by community"
+msgstr "Total Goal for BCT Donated for Earth Day by the Klimate community"
 
 #. Long sentence
 #: components/views/Donate/index.tsx:186
@@ -62,14 +62,14 @@ msgid "donate.balancescard.total"
 msgstr "Total BCT Donated for Earth Day by community"
 
 #: components/views/Donate/index.tsx:137
-#: components/views/Donate/index.tsx:219
+#: components/views/Donate/index.tsx:220
 msgid "donate.donate_bct"
 msgstr "Donate BCT"
 
 #. Long sentence
-#: components/views/Donate/index.tsx:222
+#: components/views/Donate/index.tsx:223
 msgid "donate.donate_bct_for_earth_day"
-msgstr "Donate BCT for Earth Day"
+msgstr "This unofficial donation drive for Earth Day is by the community, for the community."
 
 #: components/views/Donate/index.tsx:154
 msgid "donate.inputplaceholder"
@@ -163,7 +163,7 @@ msgstr "ERROR"
 msgid "shared.loading"
 msgstr "Loading..."
 
-#: components/views/Donate/index.tsx:246
+#: components/views/Donate/index.tsx:248
 msgid "shared.max"
 msgstr "Max"
 

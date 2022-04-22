@@ -64,12 +64,12 @@ msgid "donate.balancescard.total"
 msgstr ""
 
 #: components/views/Donate/index.tsx:137
-#: components/views/Donate/index.tsx:219
+#: components/views/Donate/index.tsx:220
 msgid "donate.donate_bct"
 msgstr ""
 
 #. Long sentence
-#: components/views/Donate/index.tsx:222
+#: components/views/Donate/index.tsx:223
 msgid "donate.donate_bct_for_earth_day"
 msgstr ""
 
@@ -165,7 +165,7 @@ msgstr "FEHLER"
 msgid "shared.loading"
 msgstr "Lade..."
 
-#: components/views/Donate/index.tsx:246
+#: components/views/Donate/index.tsx:248
 msgid "shared.max"
 msgstr "Max"
 
