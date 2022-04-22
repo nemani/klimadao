@@ -137,10 +137,6 @@ msgstr "Bislang ausgeglichen"
 msgid "shared.approve"
 msgstr "Bestätigen"
 
-#: components/BalancesCard/index.tsx:22
-msgid "shared.balances"
-msgstr "Guthaben"
-
 #: components/ChangeLanguageButton/index.tsx:73
 msgid "shared.change_language"
 msgstr "Sprache wechseln"

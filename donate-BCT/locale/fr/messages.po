@@ -135,10 +135,6 @@ msgstr "Vous avez retiré"
 msgid "shared.approve"
 msgstr "Approuver"
 
-#: components/BalancesCard/index.tsx:22
-msgid "shared.balances"
-msgstr "Soldes"
-
 #: components/ChangeLanguageButton/index.tsx:73
 msgid "shared.change_language"
 msgstr "Changer de langue"

@@ -19,7 +19,6 @@ export const BalancesCard: FC<Props> = (props) => {
       <div className="header">
         <Text t="h4" className="title">
           <AccountBalanceOutlined />
-          <Trans id="shared.balances">{props.label}</Trans>
         </Text>
         <InfoButton content={props.tooltip} />
       </div>

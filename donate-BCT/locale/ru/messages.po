@@ -135,10 +135,6 @@ msgstr ""
 msgid "shared.approve"
 msgstr ""
 
-#: components/BalancesCard/index.tsx:22
-msgid "shared.balances"
-msgstr ""
-
 #: components/ChangeLanguageButton/index.tsx:73
 msgid "shared.change_language"
 msgstr ""
